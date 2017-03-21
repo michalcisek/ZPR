@@ -320,3 +320,73 @@ bioConductior biblioteka - jesli chce sie programowac w S4
 Rzeczy pominiete:
   -dispatchowanie na podstawie wielu argumentow
 - dziedziczenie z wielu klas
+
+
+
+library(pryr)
+
+#tworzenie prostej klasy s4
+DataStruct <- setClass("DataStruct", slots = list(values="data.frame", info = "character"))
+
+#jak wyglada konstruktor
+ftype(DataStruct)
+typeof(DataStruct)
+environment(DataStruct)
+where("DataStruct")
+
+DataStruct
+
+temp <- function(object){
+  cat("object of class: ", class(object),"\n")
+  cat("no of obs: ", as.character(dim(object@values)[1]),"\n")
+  cat("no of feature: ", as.character(dim(object@values)[2]),"\n")
+  cat("info: ", object@info,"\n")
+  e<-environment()
+  print(list("execution"))
+}
+
+
+setGeneric("values", function(object,...){standardGeneric("values")})
+
+temp<- function(object,...){
+  e<-environment()
+  eParent <-parent.env(e)
+  eCalling<-parent.frame()
+  list("execution"=e, "enclosing"=eParent, "calling"=eCalling)
+}
+setMethod("values","DataStruct",temp)
+
+#tworzenie obiektu
+x<-DataStruct(values=data.frame(pos=1:3,val=rnorm(3)), info="Exemplary data")
+
+ftype("values")
+isGeneric("values")
+typeof(values)
+values
+
+#gdzie jest generic w sensie srodowiska
+where("show")
+temp<-list(environment(show))
+while(!identical(emptyenv(), temp[[length(temp)]])){
+  temp <- c(temp, list(parent.env(temp[[length(temp)]])))
+}
+temp[1:5]  
+
+
+#jak widac standardowy generic show ma enclosing env, ktory jest losowym stodowiskiem. Jest to stodowisko
+#execution dla funkcji setGeneric, ktora tworzy generica. jej enclosing env jest srodowisko namespace::methods
+environment(setGeneric)
+identical(environment(setGeneric), temp[[2]])
+
+#gdzie jest metoda show podpieta pod tego generica
+x
+
+
+#jak widac jej enclosing enc to global (tam zostala zbudowana) ale jej caling env to juz losowe srodwisko, ktore jest execution
+#env stworzone przez standardGeneric(). Sciezke przeszukiwania dla metody show dispatchowanej przez generica mozna sprawidzic
+#modyfikujac genrica
+
+temp<-function(object){
+  cat("object of class: ", class(object),"\n")
+  cat("no of obs: ")
+}
