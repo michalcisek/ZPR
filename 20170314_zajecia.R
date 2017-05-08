@@ -37,8 +37,7 @@ g3
 #proba stworzenia niepoprawnego obiektu
 g4<-new("Graph",nodes="ala",edges=edges)
 
-Niezlaeznie od wykorzystyuwanej metody zawsze sprawdzana jest poprawnosc wprowadzonych danych w sensie zgodnosci z typami danych w deklaracji struktury klasy
-
+#Niezlaeznie od wykorzystywanej metody zawsze sprawdzana jest poprawnosc wprowadzonych danych w sensie zgodnosci z typami danych w deklaracji struktury klasy
 
 # dostep do slotow w klasie S4 --------------------------------------------
 #przez operator '@'. Odpowiednik operatora '$' dla list i środowisk
@@ -194,7 +193,7 @@ validObject(g1)
 g6<-Graph(nodes=1:4, edges=rbind(c(1,2),c(2,5)))
 
 
-# Murtacja / setters ------------------------------------------------------
+# Mutacja / setters ------------------------------------------------------
 #setters
 #przyklad = dlaczego nie chcemy bezposrednio uzywac @
 #tworzenie popraewnego obiektu
@@ -299,7 +298,7 @@ b<-DataStructureWithDesc(data=data.frame(a=1:10, b=rnorm(10)),desc=" data from s
 a
 b
 
-#dodawanie metody dla klasyu datastructure
+#dodawanie metody dla klasy datastructure
 temp<-function(object){
   cat("DataStructure object\n")
   cat("number of variables: ", dim(object@data)[2],"\n",sep="")

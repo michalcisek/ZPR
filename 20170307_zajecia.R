@@ -24,7 +24,7 @@ x<-list(x=x)
 x
 typeof(x)
 
-f<-function(x) {print(x)}
+f <- function(x) {print(x)}
 f(1)
 typeof(f)
 
@@ -106,13 +106,13 @@ getS3method("plot","data.frame")
 
 #przyklad / tworzenie obiektu klasy matrix
 rm(list=ls())
-x<-structure(1:4,dim=c(2,2))
+x <- structure(1:4,dim=c(2,2))
 x
 class(x)
 attributes(x)
 
-y<-list(x=1:4)
-attr(y,"class")<-"myClass"
+y <- list(x=1:4)
+attr(y,"class") <- "myClass"
 y #obiekt klasy myClass
 inherits(y,"myClass") #czy dany obiekt dziedziczy z klasy myClass
 
